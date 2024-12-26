@@ -1,0 +1,1117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY CONTENT LEAKED PREVIOUS</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Estilo do cabeçalho fixo */
+        .header {
+            position: sticky;
+            top: 0;
+            background-color: #1d1d1d;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .header.shrink {
+            padding: 10px 15px;
+        }
+
+        .header .icon {
+            width: 50px;
+            height: 50px;
+            background-color: #00aaff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .header.shrink .icon {
+            width: 0;
+            height: 0;
+            opacity: 0;
+        }
+
+        .header .info {
+            flex-grow: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .header.shrink .info {
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+
+        .header.shrink h1 {
+            font-size: 16px;
+            max-width: 150px;
+        }
+
+        .header .members {
+            font-size: 14px;
+            color: #bbb;
+            transition: all 0.3s ease;
+        }
+
+        .header .pay-button {
+            display: none;
+            font-size: 14px;
+            color: white;
+            background-color: #00aaff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .header.shrink .pay-button {
+            display: inline-block;
+            opacity: 1;
+        }
+
+        /* Fundo da área de mensagens */
+        .group {
+            margin-top: 20px;
+            padding: 0 15px;
+            overflow-y: auto;
+            max-height: calc(100vh - 100px);
+            background-image: url('https://i.postimg.cc/wvm97fyb/IMG-20241130-200303.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            scrollbar-width: thin;
+        }
+
+        .preview {
+            margin-bottom: 15px;
+            background-color: rgba(29, 29, 29, 0.8);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .preview .title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .preview .videos {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .preview .videos video {
+            width: 150px;
+            height: 100px;
+            border-radius: 8px;
+        }
+
+        .preview .description {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        /* Estilizando a barra de rolagem */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(29, 29, 29, 0.8);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00aaff;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #008fcc;
+        }
+
+        /* Botão flutuante no canto inferior esquerdo */
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #0088cc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            z-index: 101;
+        }
+
+        .floating-button img {
+            width: 30px;
+            height: 30px;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Estilo do pop-up */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
+            background-color: #1d1d1d;
+            padding: 20px;
+            border-radius: 8px;
+            z-index: 102;
+            display: none;
+        }
+
+        .popup.active {
+            display: block;
+        }
+
+        .popup video {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .popup .close-btn {
+            margin-top: 10px;
+            text-align: right;
+            cursor: pointer;
+            color: #00aaff;
+            font-size: 16px;
+        }
+        
+        .product-preview {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%; /* Adaptação responsiva */
+      padding: 15px;
+      text-align: center;
+  }
+
+  .product-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+  }
+
+  .media-frame {
+      width: 100%;
+      height: calc(100vw * 0.5625); /* Proporção 16:9 */
+      max-height: 400px; /* Limite máximo */
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 15px;
+  }
+
+  .product-description {
+      text-align: left;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+  }
+
+  .product-description ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+  }
+
+  .product-description li {
+      margin: 5px 0;
+  }
+
+  .product-price span strong a{
+      font-size: 16px;
+      color: #1a73e8;
+      font-weight: bold;
+  }
+  
+  .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      position: relative;
+      overflow-y: auto;
+      max-height: 80%;
+    }
+
+    .popup-content h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .popup-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .popup-content ul li {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: none;
+      color: #333;
+      border: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: #d9534f;
+    }
+
+    .get-now-btn {
+      background: #5cb85c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .get-now-btn:hover {
+      background: #4cae4c;
+    }
+
+    .view-more {
+      color: #007bff;
+      text-decoration: none;
+      cursor: pointer;
+      margin-left:150px;
+    }
+
+    .view-more:hover {
+      text-decoration: underline;
+    }
+        #notification-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  z-index: 1000;
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  padding: 10px 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  margin-bottom: 10px;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fade-in 1s ease forwards, fade-out 1s ease 4s forwards;
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.notification img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.notification-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-title {
+  font-weight: bold;
+  color: #333;
+}
+
+.notification-message {
+  color: #666;
+  font-size: 13px;
+}
+
+.notification-time {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 12px;
+  color: #888;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+}
+/* Modal Container */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Modal Content */
+.modal-content {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px 30px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: scale-in 0.3s ease;
+}
+
+.modal-content h2 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.modal-content p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.positive {
+  background-color: #007bff;
+  color: white;
+  animation: button-wiggle 1.5s infinite ease-in-out;
+}
+
+.negative {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Button Wiggle Animation */
+@keyframes button-wiggle {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+}
+
+/* Scale animation for the modal */
+@keyframes scale-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+    </style>
+</head>
+<body>
+<div id="notification-container"></div>
+    <div class="header" id="header">
+        <div class="icon" id="icon">MC</div>
+        <div class="info">
+            <h1 id="group-name">MY CONTENT LEAKED PREVIOUS</h1>
+            <span class="members">5683 members  <span id="online-count">1279</span> online</span>
+        </div>
+        <div class="pay-button" onclick="openPopup()">How to Pay</div>
+    </div>
+
+    <div class="group">
+        <!-- Conteúdo do grupo -->
+       
+<div class="preview">
+        <div class="videos">
+            <div class="product-preview">
+    <h1 class="product-title">LIZZY AND HER BROTHER INCEST FOLDER✅ </h1>
+    <img 
+    class="media-frame" 
+    src="https://player.vimeo.com/video/1037798562?title=0&byline=0&portrait=0" 
+    alt="Product Preview" 
+    style="width: 100%; max-width: 400px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+/>
+    <div class="product-description">
+        <p><strong>Descrição:</strong> </p>
+        <ul>
+            <li>• ✅Content de incest</li>
+            <li>• ✅BLACKMAIL VIDEOS</li>
+            <li>• ✅+2600 vídeos</li>
+            <li>• ✅Link MEGA file</li>
+            <li>• ✅21GB pure of Content</li>
+        </ul>
+    <div class="">
+        <span style='color:red'><strong>Price</strong> $30 USD</span>
+    </div>
+    </div>
+    <div class="product-price">
+        <span><strong><a href="https://www.paypal.com/ncp/payment/RLQRL44ADCXCW">GET NOW</a></strong></span>
+    </div>
+</div>
+        </div>
+        <div class="description"></div>
+    </div>
+</div>
+<div class="preview">
+        <div class="videos">
+            <div class="product-preview">
+    <h1 class="product-title">🎁IZZY AND DOG🎁</h1>
+    <iframe 
+        class="media-frame"
+        src="https://player.vimeo.com/video/1037798562?title=0&byline=0&portrait=0" 
+        frameborder="0" 
+        allow="autoplay; fullscreen; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
+    <div class="product-description">
+        <p><strong>Description:</strong> </p>
+        <ul>
+            <li>• ✅sex with Dog</li>
+            <li>• ✅Leaked Snap</li>
+            <li>• ✅+3000 vídeos</li>
+            <li>• ✅Link MEGA file</li>
+            <li>• ✅30GB pure of Content</li>
+        </ul>
+    <div class="">
+        <span style='color:red'><strong>Price</strong> $30 USD</span>
+    </div>
+    </div>
+    <div class="product-price">
+        <span><strong><a href="https://www.paypal.com/ncp/payment/6RGTA2TGS9YRQ">GET NOW</a></strong></span>
+    </div>
+</div>
+        </div>
+        <div class="description"></div>
+    </div>
+</div>
+    <div class="preview">
+        <div class="videos">
+            <div class="product-preview">
+    <h1 class="product-title">‼ANXIOUS PANDA FOLDER‼</h1>
+    <iframe 
+        class="media-frame" 
+        
+        src="https://player.vimeo.com/video/1041947716"
+        frameborder="0" 
+        allow="autoplay; fullscreen; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
+    <div class="product-description">
+        <p><strong>Description:</strong> </p>
+        <ul>
+            <li>• ✅OMEGLE GAME</li>
+            <li>• ✅SPANISH GIRLS</li>
+            <li>• ✅more than 150 different girls</li>
+            <li>• ✅over 120gb of videos</li>
+            <li>• ✅Link MEGA file</li>
+            <li>• ✅only the best</li>
+        </ul>
+    <div class="">
+        <span style='color:red'><strong>Price</strong> $25 USD</span>
+    </div>
+    </div>
+    <div class="product-price">
+        <span><strong><a href="https://www.paypal.com/ncp/payment/DHR5Y23GQ5MDN">GET NOW</a></strong></span>
+    </div>
+</div>
+        </div>
+        <div class="description"></div>
+    </div>
+</div>
+<div class="preview">
+        <div class="videos">
+            <div class="product-preview">
+    <h1 class="product-title">Desiree Garcia Teen</h1>
+    <iframe 
+        class="media-frame" 
+        
+       src="https://player.vimeo.com/video/1037798562?title=0&byline=0&portrait=0" 
+        frameborder="0" 
+        allow="autoplay; fullscreen; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
+    <div class="product-description">
+        <p><strong>Descrição:</strong> </p>
+        <ul>
+            <li>• ✅teen Content</li>
+            <li>• ✅Leaked Snap</li>
+            <li>• ✅+900 vídeos</li>
+            <li>• ✅Link MEGA file</li>
+            <li>• ✅10GB Pure of Content</li>
+        </ul>
+    <div class="">
+        <span style='color:red'><strong>Price</strong> $35 USD</span>
+    </div>
+    </div>
+    <div class="product-price">
+        <span><strong><a href="https://www.paypal.com/ncp/payment/W3NC2QARRLQ28">GET NOW</a></strong></span>
+    </div>
+</div>
+        </div>
+        <div class="description"></div>
+    </div>
+</div>
+<div class="preview">
+        <div class="videos">
+            <div class="product-preview">
+    <h1 class="product-title">😈Emmi sellers Folder😈</h1>
+    <iframe 
+        class="media-frame" 
+        
+        src="https://player.vimeo.com/video/1037800737?title=0&byline=0&portrait=0" 
+        frameborder="0" 
+        allow="autoplay; fullscreen; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
+    <div class="product-description">
+        <p><strong>Description:</strong> </p>
+        <ul>
+            <li>• ✅Content of teens</li>
+            <li>• ✅biggest & best folder</li>
+            <li>• ✅+700 vídeos</li>
+            <li>• ✅Link MEGA file</li>
+            <li>• ✅50GB Pure of Content </li>
+        </ul>
+    <div class="">
+        <span style='color:red'><strong>Price</strong> $45 USD</span>
+    </div>
+    </div>
+    <div class="product-price">
+        <span><strong><a href="https://www.paypal.com/ncp/payment/VRTLVN2Z2WGU4">GET NOW</a></strong></span>
+    </div>
+</div>
+        </div>
+        <div class="description"></div>
+    </div>
+</div>
+
+<div class="preview">
+  <div class="videos">
+      <div class="product-preview">
+<h1 class="product-title">😈DARKZADIE LEAKS😈</h1>
+<iframe 
+  class="media-frame" 
+  
+  src="https://player.vimeo.com/video/1037800737?title=0&byline=0&portrait=0" 
+  frameborder="0" 
+  allow="autoplay; fullscreen; picture-in-picture" 
+  allowfullscreen>
+</iframe>
+<div class="product-description">
+  <p><strong>Description:</strong> </p>
+  <ul>
+      <li>• ✅Leaks Content</li>
+      <li>• ✅Very famous on tiktok</li>
+      <li>• ✅snapchat leaked</li>
+      <li>• ✅+1500 vídeos</li>
+      <li>• ✅Link MEGA file</li>
+      <li>• ✅50GB Pure of Content </li>
+  </ul>
+<div class="">
+  <span style='color:red'><strong>Price</strong> $45 USD</span>
+</div>
+</div>
+<div class="product-price">
+  <span><strong><a href="https://www.paypal.com/ncp/payment/KPDX3RURPU9CQ">GET NOW</a></strong></span>
+</div>
+</div>
+  </div>
+  <div class="description"></div>
+</div>
+</div>
+
+<div class="preview">
+  <div class="videos">
+      <div class="product-preview">
+<h1 class="product-title">😈invaka and brother😈</h1>
+<iframe 
+  class="media-frame" 
+  
+  src="https://player.vimeo.com/video/1037800737?title=0&byline=0&portrait=0" 
+  frameborder="0" 
+  allow="autoplay; fullscreen; picture-in-picture" 
+  allowfullscreen>
+</iframe>
+<div class="product-description">
+  <p><strong>Description:</strong> </p>
+  <ul>
+      <li>• ✅Content de incest</li>
+      <li>• ✅BLACKMAIL VIDEOS</li>
+      <li>• ✅+1000 vídeos</li>
+      <li>• ✅Link MEGA file</li>
+      <li>• ✅40GB Pure of Content </li>
+  </ul>
+<div class="">
+  <span style='color:red'><strong>Price</strong> $45 USD</span>
+</div>
+</div>
+<div class="product-price">
+  <span><strong><a href="https://www.paypal.com/ncp/payment/NXAJNF7P2BYCL">GET NOW</a></strong></span>
+</div>
+</div>
+  </div>
+  <div class="description"></div>
+</div>
+</div>
+
+<div class="preview">
+  <div class="videos">
+      <div class="product-preview">
+<h1 class="product-title">Lesbian Banana Girls+Vip Access✅</h1>
+<iframe 
+  class="media-frame" 
+  
+  src="https://player.vimeo.com/video/1037800737?title=0&byline=0&portrait=0" 
+  frameborder="0" 
+  allow="autoplay; fullscreen; picture-in-picture" 
+  allowfullscreen>
+</iframe>
+<div class="product-description">
+  <p><strong>Description:</strong> </p>
+  <ul>
+      <li>• ✅the full vid has 2h</li>
+      <li>• ✅Group vip access on telegram</li>
+      <li>• ✅more than 2000 vids </li>
+      <li>• ✅15GB  Pure of Content </li>
+  </ul>
+<div class="">
+  <span style='color:red'><strong>Price</strong> $25 USD</span>
+</div>
+</div>
+<div class="product-price">
+  <span><strong><a href="https://www.paypal.com/ncp/payment/HLTVSCCWJUPGW">GET NOW</a></strong></span>
+</div>
+</div>
+  </div>
+  <div class="description"></div>
+</div>
+</div>
+
+
+
+    <!-- Botão flutuante -->
+    <div class="floating-button" onclick="redirectToTelegram()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+    </div>
+<a class="view-more" onclick="showNewPopup()">View More</a>
+
+<div class="popup-overlay" id="newPopup">
+  <div class="popup-content">
+    <button class="close-btn" onclick="closeNewPopup()">×</button>
+      <h2>🚨All Content Available🚨</h2>
+      <h3>🚨if you prefer you can get all the content for only$95🚨</h3>
+
+      <ul>
+        <li>✅Two lesbian girls 🍌25$</li>
+        <li>✅Lizzy Folder 30$</li>
+        <li>✅Desire Garcia 30$</li>
+        <li>✅CP folder 6-12 years 70$</li>
+        <li>✅CP folder 12-16 years 50$</li>
+        <li>✅Emmi sellers 40$</li>
+        <li>✅Black teen 30$</li>
+        <li>✅CSL 25$</li>
+        <li>✅Inc3st folder 35$</li>
+        <li>✅Snapgod full edition 60$</li>
+        <li>✅Omegle 25$</li>
+        <li>✅Darkzadie leaks (zip)+25GBfolder 30$</li>
+        <li>✅Omegle teen leaks 25$</li>
+        <li>✅Monkeyapp wins 25$</li>
+        <li>✅Anxious Panda 25$</li>
+        <li>✅Flash Folder 20$</li>
+        <li>✅Daughters wap leakzone 15$</li>
+        <li>✅Lilly lanes 10$</li>
+        <li>✅Queen bree69 15$</li>
+        <li>✅BLACKMAIL 30$</li>
+        <li>✅Snapchat 25%</li>
+        <li>✅Snap 18+ teens 40$</li>
+        <li>✅Skype (call USA, South Africa, girls) 50$</li>
+        <li>✅Snaplnk 15$</li>
+        <li>✅Kazumi squirt 10%</li>
+        <li>✅Cp vip group access 95%</li>
+
+        <h4>🚨if you prefer you can get all the content for only $95🚨</h4>
+      </ul>
+      <a href="https://www.paypal.com/ncp/payment/U877CE92GNJ9G" class="get-now-btn">Get Now</a>
+    </div>
+  </div>
+
+
+    <!-- Pop-up -->
+    <div class="popup" id="popup">
+        <iframe 
+        class="media-frame" 
+        src="https://player.vimeo.com/video/1035026300?title=0&byline=0&portrait=0" 
+        frameborder="0" 
+        allow="autoplay; fullscreen; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
+        <div class="close-btn" onclick="closePopup()">Close</div>
+    </div>
+    </div>
+
+    <div class="floating-button" onclick="redirectToTelegram()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+    </div>
+
+    <div class="popup" id="popup">
+        <video controls>
+            <source src="tutorial.mp4" type="video/mp4">
+            Your browser does not support the video.
+        </video>
+        <div class="close-btn" onclick="closePopup()">X</div>
+    </div>
+
+<div id="offer-modal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Want to leave without grabbing your offer?</h2>
+    <p>Get any content now with an exclusive discount of <strong>50% OFF</strong>!</p>
+    <div class="modal-buttons">
+      <button id="accept-offer" class="btn positive">Get Offer Now</button>
+      <button id="dismiss-modal" class="btn negative">Close</button>
+    </div>
+  </div>
+</div>
+<script>
+  // Configurações do contador
+  const minOnline = 1200; // Mínimo de pessoas online
+  const maxOnline = 1400; // Máximo de pessoas online
+  const updateInterval = 3000; // Intervalo de atualização em milissegundos (3s)
+
+  function updateOnlineCount() {
+    const onlineCountElement = document.getElementById("online-count");
+    let currentOnline = parseInt(onlineCountElement.textContent);
+
+    // Define o próximo valor aleatoriamente dentro de um intervalo
+    let change = Math.floor(Math.random() * 21) - 10; // Valor entre -10 e +10
+    let newOnline = currentOnline + change;
+
+    // Garante que o valor esteja dentro do limite definido
+    if (newOnline < minOnline) newOnline = minOnline;
+    if (newOnline > maxOnline) newOnline = maxOnline;
+
+    // Atualiza apenas o número de pessoas online
+    onlineCountElement.textContent = newOnline;
+  }
+
+  // Atualiza o número de pessoas online em intervalos regulares
+  setInterval(updateOnlineCount, updateInterval);
+</script>
+<script>
+  function showNewPopup() {
+    document.getElementById("newPopup").style.display = "flex";
+  }
+
+  function closeNewPopup() {
+    document.getElementById("newPopup").style.display = "none";
+  }
+</script>
+    <script>
+    
+        const header = document.getElementById('header');
+        const popup = document.getElementById('popup');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shrink');
+            } else {
+                header.classList.remove('shrink');
+            }
+        });
+
+        function openPopup() {
+            popup.classList.add('active');
+        }
+
+        function closePopup() {
+            popup.classList.remove('active');
+        }
+
+        function redirectToTelegram() {
+            window.open('https://www.paypal.com/ncp/payment/U877CE92GNJ9G', '_blank');
+        }
+        
+        const items = [
+  "Rape Folder",
+  "SnapGod Full Edition",
+  "CP Folder",
+  "MonkeyApp Wins",
+  "Darkzadie Leaks (ZIP) + 2GB Folder",
+  "Omegle Teen Leaks",
+  "Anxious Panda",
+  "Daughters WAP Leakzone",
+  "Lilly Lanes",
+  "Queen Bree69",
+  "BLACKMAIL",
+  "Snapchat",
+  "Snap 18+ Teens",
+  "Skype (Call USA, South Africa, Girls)",
+  "Snaplnk",
+  "Kazumi Squirt",
+  "Objective Dark",
+];
+
+const maleNames = [
+  "John Smith",
+  "Michael Johnson",
+  "James Brown",
+  "Robert Davis",
+  "William Garcia",
+  "Thomas Miller",
+  "Christopher Martinez",
+  "Daniel Anderson",
+  "Matthew Taylor",
+  "Andrew Moore",
+];
+
+function getRandomElement(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+function getRandomInterval() {
+  return Math.random() * (45000 - 30000) + 30000; // Random interval between 30s and 45s
+}
+
+function showNotification() {
+  const container = document.getElementById("notification-container");
+  const randomName = getRandomElement(maleNames);
+  const randomItem = getRandomElement(items);
+
+  const notification = document.createElement("div");
+  notification.className = "notification";
+  notification.innerHTML = `
+    <img src="https://img.icons8.com/ios-filled/50/telegram-app.png" alt="App Icon">
+    <div class="notification-content">
+      <span class="notification-title">${randomName}</span>
+      <span class="notification-message">purchased ${randomItem}</span>
+    </div>
+    <span class="notification-time">Just now</span>
+  `;
+
+  container.appendChild(notification);
+
+  // Remove notification after 5 seconds
+  setTimeout(() => {
+    notification.style.animation = "fade-out 1s ease forwards";
+    setTimeout(() => container.removeChild(notification), 1000);
+  }, 5000);
+}
+
+// Display notifications at random intervals
+function generateNotifications() {
+  showNotification();
+  setTimeout(generateNotifications, getRandomInterval());
+}
+
+// Start notifications
+generateNotifications();
+let modalShown = false;
+
+function showExitModal(event) {
+  if (!modalShown) {
+    event.preventDefault();
+    document.getElementById("offer-modal").classList.remove("hidden");
+    modalShown = true;
+  }
+}
+
+// Variável para rastrear se o modal foi exibido
+let modalDisplayed = false;
+
+// Detectar cliques em links
+document.addEventListener("click", (event) => {
+  const target = event.target.closest("a");
+
+  // Verificar se é um link
+  if (target && target.href) {
+    const isTelegramLink = target.href.startsWith("https://www.paypal.com/ncp/payment/U877CE92GNJ9G");
+
+    if (isTelegramLink) {
+      // Links do Telegram: permitir navegação normalmente
+      return;
+    } else {
+      // Outros links: impedir navegação e mostrar o modal
+      event.preventDefault(); // Bloquear navegação padrão
+      if (!modalDisplayed) {
+        showExitModal(target.href); // Passar o link clicado para o modal
+      }
+    }
+  }
+});
+
+// Mostrar o modal de saída
+function showExitModal(redirectUrl = null) {
+  const modal = document.getElementById("offer-modal");
+  if (modal && !modalDisplayed) {
+    modal.classList.remove("hidden");
+    modalDisplayed = true; // Garantir que o modal só seja exibido uma vez
+
+    // Salvar o link clicado para redirecionar depois
+    if (redirectUrl) {
+      modal.dataset.redirectUrl = redirectUrl;
+    }
+  }
+}
+
+// Fechar o modal sem redirecionar
+function closeModal() {
+  const modal = document.getElementById("offer-modal");
+  if (modal) {
+    modal.classList.add("hidden");
+    modalDisplayed = false; // Resetar estado
+  }
+}
+
+// Aceitar a oferta no modal e redirecionar
+document.getElementById("accept-offer").addEventListener("click", () => {
+  const modal = document.getElementById("offer-modal");
+  if (modal && modal.dataset.redirectUrl) {
+    window.location.href = modal.dataset.redirectUrl; // Redirecionar para o link clicado
+  } else {
+    window.location.href = "https://www.paypal.com/ncp/payment/U877CE92GNJ9G"; // Link padrão
+  }
+});
+
+// Botão para fechar o modal
+document.getElementById("dismiss-modal").addEventListener("click", closeModal);
+
+    </script>
+   
+   
+</body>
+</html>
